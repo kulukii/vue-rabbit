@@ -4,16 +4,16 @@ import { getCategoryAPI } from '@/apis/layout';
 
 export const useCategoryStore = defineStore('category', () => {
   // 导航数据管理
-  const categortList = ref([])
+  const categoryList = ref([])
 
   const getCategory = async () => {
     const res = await getCategoryAPI()
     console.log(res);
-    categortList.value = res.result
+    categoryList.value = res.result
   }
 
   return {
-    categortList,
+    categoryList,
     getCategory
   }
 })
