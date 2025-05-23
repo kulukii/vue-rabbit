@@ -4,6 +4,7 @@ import { onMounted } from 'vue';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router'
 import DetaiHot from './components/DetaiHot.vue';
+import ImgView from '@/components/ImgView/index.vue'
 
 const route = useRoute()
 const goods = ref({})
@@ -27,9 +28,9 @@ onMounted(() => {
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
           <!-- 可选链或者v-if -->
           <el-breadcrumb-item :to="{ path: `/category/${goods.categories[1].id}` }">{{ goods.categories[1].name
-          }}</el-breadcrumb-item>
+            }}</el-breadcrumb-item>
           <el-breadcrumb-item :to="{ path: `/category/${goods.categories[0].id}` }">{{ goods.categories[0].name
-          }}</el-breadcrumb-item>
+            }}</el-breadcrumb-item>
           <el-breadcrumb-item>抓绒保暖，毛毛虫子儿童运动鞋</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -39,7 +40,7 @@ onMounted(() => {
           <div class="goods-info">
             <div class="media">
               <!-- 图片预览区 -->
-
+              <ImgView />
               <!-- 统计数量 -->
               <ul class="goods-sales">
                 <li>
@@ -123,9 +124,9 @@ onMounted(() => {
             <!-- 24热榜+专题推荐 -->
             <div class="goods-aside">
               <!-- 24小时 -->
-              <DetaiHot :hot-type="1"/>
+              <DetaiHot :hot-type="1" />
               <!-- 周 -->
-              <DetaiHot :hot-type="2"/>
+              <DetaiHot :hot-type="2" />
             </div>
           </div>
         </div>
