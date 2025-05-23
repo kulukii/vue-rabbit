@@ -123,9 +123,9 @@ onMounted(() => {
             <!-- 24热榜+专题推荐 -->
             <div class="goods-aside">
               <!-- 24小时 -->
-              <DetaiHot />
+              <DetaiHot :hot-type="1"/>
               <!-- 周 -->
-              <DetaiHot />
+              <DetaiHot :hot-type="2"/>
             </div>
           </div>
         </div>
