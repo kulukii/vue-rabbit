@@ -26,7 +26,10 @@ const { elementX, elementY, isOutside } = useMouseInElement(target)
 // 控制滑块跟随鼠标移动
 const left = ref(0)
 const top = ref(0)
+const positionX = ref(0)
+const positionY = ref(0)
 watch([elementX, elementY], () => {
+  if (isOutside.value) return
   if (elementX.value > 100 && elementX.value < 300) {
     left.value = elementX.value - 100
   }
@@ -39,7 +42,12 @@ watch([elementX, elementY], () => {
   if (elementX.value < 100) { left.value = 0 }
   if (elementY.value > 300) { top.value = 200 }
   if (elementY.value < 100) { top.value = 0 }
+
+  // 大图
+  positionX.value = -left.value * 2
+  positionY.value = -top.value * 2
 })
+
 </script>
 
 
@@ -49,7 +57,7 @@ watch([elementX, elementY], () => {
     <div class="middle" ref="target">
       <img :src="imageList[activeIndex]" alt="" />
       <!-- 蒙层小滑块 -->
-      <div class="layer" :style="{ left: `${left}px`, top: `${top}px` }"></div>
+      <div class="layer" :style="{ left: `${left}px`, top: `${top}px` }" v-show="!isOutside"></div>
     </div>
     <!-- 小图列表 -->
     <ul class="small">
@@ -61,10 +69,10 @@ watch([elementX, elementY], () => {
     <div class="large" :style="[
       {
         backgroundImage: `url(${imageList[0]})`,
-        backgroundPositionX: `0px`,
-        backgroundPositionY: `0px`,
+        backgroundPositionX: `${positionX}px`,
+        backgroundPositionY: `${positionY}px`,
       },
-    ]" v-show="false"></div>
+    ]" v-show="!isOutside"></div>
   </div>
 </template>
 
