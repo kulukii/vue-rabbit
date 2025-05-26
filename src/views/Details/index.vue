@@ -5,6 +5,7 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router'
 import DetaiHot from './components/DetaiHot.vue';
 import ImgView from '@/components/ImgView/index.vue'
+import XtxSku from '@/components/XtxSku/index.vue'
 
 const route = useRoute()
 const goods = ref({})
@@ -18,6 +19,11 @@ onMounted(() => {
   getGoods()
 })
 
+// sku规格被操作时
+const skuChange = (sku) => {
+  console.log(sku);
+
+}
 </script>
 
 <template>
@@ -40,7 +46,7 @@ onMounted(() => {
           <div class="goods-info">
             <div class="media">
               <!-- 图片预览区 -->
-              <ImgView :image-list="goods.mainPictures"/>
+              <ImgView :image-list="goods.mainPictures" />
               <!-- 统计数量 -->
               <ul class="goods-sales">
                 <li>
@@ -89,7 +95,7 @@ onMounted(() => {
                 </dl>
               </div>
               <!-- sku组件 -->
-
+              <XtxSku :goods="goods" @change="skuChange" />
               <!-- 数据组件 -->
 
               <!-- 按钮组件 -->
