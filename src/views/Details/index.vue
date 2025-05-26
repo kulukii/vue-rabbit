@@ -4,8 +4,7 @@ import { onMounted } from 'vue';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router'
 import DetaiHot from './components/DetaiHot.vue';
-import ImgView from '@/components/ImgView/index.vue'
-import XtxSku from '@/components/XtxSku/index.vue'
+
 
 const route = useRoute()
 const goods = ref({})
@@ -22,7 +21,6 @@ onMounted(() => {
 // sku规格被操作时
 const skuChange = (sku) => {
   console.log(sku);
-
 }
 </script>
 
@@ -46,7 +44,7 @@ const skuChange = (sku) => {
           <div class="goods-info">
             <div class="media">
               <!-- 图片预览区 -->
-              <ImgView :image-list="goods.mainPictures" />
+              <XtxImageView :image-list="goods.mainPictures" />
               <!-- 统计数量 -->
               <ul class="goods-sales">
                 <li>
