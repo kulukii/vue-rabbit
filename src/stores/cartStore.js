@@ -1,6 +1,6 @@
 import { ElStep } from "element-plus";
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 export const useCartStore = defineStore('cart', () => {
   const cartList = ref([])
   const addCart = (goods) => {
@@ -19,11 +19,17 @@ export const useCartStore = defineStore('cart', () => {
     cartList.value.splice(idx, 1)
   }
 
-
+  // 计算属性
+  // 总数
+  const allCount = computed(() => cartList.value.reduce((pre, cur) => { pre + cur.count }, 0))
+  // 总价
+  const allPrice = computed(() => cartList.value.reduce((pre, cur) => { pre + cur.count * c.price }, 0))
   return {
     cartList,
     addCart,
-    delCart
+    delCart,
+    allCount,
+    allPrice
   }
 }, {
   persist: true
