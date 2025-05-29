@@ -21,9 +21,9 @@ export const useCartStore = defineStore('cart', () => {
 
   // 计算属性
   // 总数
-  const allCount = computed(() => cartList.value.reduce((pre, cur) => { pre + cur.count }, 0))
+  const allCount = computed(() => cartList.value.reduce((pre, cur) => { return pre + cur.count }, 0))
   // 总价
-  const allPrice = computed(() => cartList.value.reduce((pre, cur) => { pre + cur.count * c.price }, 0))
+  const allPrice = computed(() => cartList.value.reduce((pre, cur) => { return pre + cur.count * cur.price }, 0))
   return {
     cartList,
     addCart,
