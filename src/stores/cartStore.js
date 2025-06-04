@@ -1,19 +1,25 @@
-import { ElStep } from "element-plus";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { userdefineStore } from '@/stores/user'
-import { insertCartAPI, findNewCartListAPI } from '@/apis/cart'
+import { insertCartAPI, findNewCartListAPI, delCartAPI } from '@/apis/cart'
 
 export const useCartStore = defineStore('cart', () => {
   const userStore = userdefineStore()
   const isLogin = computed(() => userStore.userInfo.token)
   const cartList = ref([])
-  const addCart =async (goods) => {
+
+  // 获取最新购物车列表action
+  const updateNewList = async () => {
+    const res = await findNewCartListAPI()
+    cartList.value = res.result
+
+  }
+  // 添加购物车
+  const addCart = async (goods) => {
     if (isLogin) {
       const { skuId, count } = goods
-   await   insertCartAPI({ skuId, count })
-   const res=await findNewCartListAPI()
-   cartList.value=res.result
+      await insertCartAPI({ skuId, count })
+      updateNewList()
     } else {
       const item = cartList.value.find((item) => item.skuId === goods.skuId)
       if (item) {
@@ -23,13 +29,19 @@ export const useCartStore = defineStore('cart', () => {
       }
     }
   }
-
-  const delCart = (skuId) => {
-    const idx = cartList.value.findIndex((item) => {
-      skuId == item.skuId
-    })
-    cartList.value.splice(idx, 1)
+  // 删除购物车
+  const delCart = async (skuId) => {
+    if (isLogin.value) {
+      await delCartAPI([skuId])
+      updateNewList()
+    } else {
+      const idx = cartList.value.findIndex((item) => {
+        skuId == item.skuId
+      })
+      cartList.value.splice(idx, 1)
+    }
   }
+
 
 
   // 单选功能
