@@ -6,6 +6,7 @@ import Category from '@/views/Category/index.vue'
 import subCategory from '@/views/subCategory/index.vue'
 import Detail from '@/views/Details/index.vue'
 import cartList from '@/views/CartList/index.vue'
+import Checkout from '@/views/CheckOut/index.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -30,8 +31,12 @@ const router = createRouter({
           component: Detail
         },
         {
-          path:'cartlist',
-          component:cartList
+          path: 'cartlist',
+          component: cartList
+        },
+        {
+          path: 'checkout',
+          component: Checkout
         }
       ]
     },
