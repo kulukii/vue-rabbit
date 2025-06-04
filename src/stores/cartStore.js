@@ -1,14 +1,26 @@
 import { ElStep } from "element-plus";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
+import { userdefineStore } from '@/stores/user'
+import { insertCartAPI, findNewCartListAPI } from '@/apis/cart'
+
 export const useCartStore = defineStore('cart', () => {
+  const userStore = userdefineStore()
+  const isLogin = computed(() => userStore.userInfo.token)
   const cartList = ref([])
-  const addCart = (goods) => {
-    const item = cartList.value.find((item) => item.skuId === goods.skuId)
-    if (item) {
-      item.count++
+  const addCart =async (goods) => {
+    if (isLogin) {
+      const { skuId, count } = goods
+   await   insertCartAPI({ skuId, count })
+   const res=await findNewCartListAPI()
+   cartList.value=res.result
     } else {
-      cartList.value.push(goods)
+      const item = cartList.value.find((item) => item.skuId === goods.skuId)
+      if (item) {
+        item.count++
+      } else {
+        cartList.value.push(goods)
+      }
     }
   }
 
