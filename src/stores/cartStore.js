@@ -14,6 +14,7 @@ export const useCartStore = defineStore('cart', () => {
     cartList.value = res.result
 
   }
+
   // 添加购物车
   const addCart = async (goods) => {
     if (isLogin) {
@@ -41,7 +42,8 @@ export const useCartStore = defineStore('cart', () => {
       cartList.value.splice(idx, 1)
     }
   }
-  // 情空购物车
+
+  // 清空购物车
   const clearCart = () => {
     cartList.value = []
   }
