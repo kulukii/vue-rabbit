@@ -1,4 +1,8 @@
 <script setup>
+import { getUserOrder } from '@/apis/order'
+import { onMounted } from 'vue';
+import { ref } from 'vue';
+
 // tab列表
 const tabTypes = [
   { name: "all", label: "全部订单" },
@@ -9,8 +13,21 @@ const tabTypes = [
   { name: "complete", label: "已完成" },
   { name: "cancel", label: "已取消" }
 ]
+
 // 订单列表
-const orderList = []
+const orderList = ref([])
+const params = ref({
+  orderState: 0,
+  page: 1,
+  pageSize: 2
+})
+
+const getOrderList = async () => {
+  const res = await getUserOrder(params)
+  orderList.value = res.result
+}
+
+onMounted(()=>getOrderList())
 
 </script>
 
@@ -33,7 +50,7 @@ const orderList = []
               <!-- 未付款，倒计时时间还有 -->
               <span class="down-time" v-if="order.orderState === 1">
                 <i class="iconfont icon-down-time"></i>
-                <b>付款截止: {{order.countdown}}</b>
+                <b>付款截止: {{ order.countdown }}</b>
               </span>
             </div>
             <div class="body">
@@ -74,8 +91,7 @@ const orderList = []
                 <p>在线支付</p>
               </div>
               <div class="column action">
-                <el-button  v-if="order.orderState === 1" type="primary"
-                  size="small">
+                <el-button v-if="order.orderState === 1" type="primary" size="small">
                   立即付款
                 </el-button>
                 <el-button v-if="order.orderState === 3" type="primary" size="small">
